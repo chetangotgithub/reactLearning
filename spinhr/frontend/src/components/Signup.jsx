@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [userDetail, setuserDetails] = useState({
@@ -8,6 +9,8 @@ const Signup = () => {
     retype: "",
     email: "",
   });
+
+  const navtigate = useNavigate();
   const handelSubmit = async (event) => {
     event.preventDefault();
     if (userDetail.password !== userDetail.retype) {
@@ -24,6 +27,7 @@ const Signup = () => {
       .then((res) => {
         console.log(res);
         alert(`Successfully added User ${userDetail.username}`);
+        navtigate("/login");
       })
       .catch((error) => {
         console.log(error);
@@ -35,7 +39,7 @@ const Signup = () => {
   return (
     <div>
       <form onSubmit={handelSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username : </label>
         <input
           type="text"
           name="username"
@@ -47,7 +51,8 @@ const Signup = () => {
             })
           }
         />
-        <label htmlFor="password">password</label>
+        <br />
+        <label htmlFor="password">password : </label>
         <input
           type="password"
           name="password"
@@ -59,7 +64,8 @@ const Signup = () => {
             })
           }
         />
-        <label htmlFor="retype"> Retype Passowrd</label>
+        <br />
+        <label htmlFor="retype"> Retype Passowrd : </label>
         <input
           type="password"
           name="retype"
@@ -71,7 +77,8 @@ const Signup = () => {
             })
           }
         />
-        <label htmlFor="email">Email Id</label>
+        <br />
+        <label htmlFor="email">Email Id : </label>
         <input
           type="text"
           name="email"
@@ -83,6 +90,7 @@ const Signup = () => {
             })
           }
         />
+        <br />
         <button type="submit">Submit</button>
       </form>
     </div>

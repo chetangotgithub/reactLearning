@@ -8,21 +8,38 @@ import {
   Link,
   useParams,
   useNavigate,
+  Navigate,
 } from "react-router-dom";
-import Signup from "./signup";
+import Signup from "./Signup";
+import axios from "axios";
 
 const Login = () => {
   const [credentials, setcredentials] = useState({
     username: "",
     password: "",
   });
-  const handelSubmit = (e) => {
+  const [validUser, setvalidUser] = useState(null);
+  const navigate = useNavigate();
+
+  const handelSubmit = async (e) => {
     e.preventDefault();
     console.log("credentials ", credentials);
-    setcredentials({
-      username: "",
-      password: "",
-    });
+    const response = await axios.post(
+      "http://localhost:3000/login",
+      credentials
+    );
+    console.log(response);
+    if (response.data.status == "failure") {
+      alert(response.data.message);
+    } else {
+      navigate("/users");
+      setvalidUser(response.data.accessToken);
+
+      setcredentials({
+        username: "",
+        password: "",
+      });
+    }
   };
   return (
     <>
